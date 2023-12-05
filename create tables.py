@@ -1,6 +1,5 @@
 import os, os.path
 import sqlite3
-from sqlite3 import Connection
 
 from settings import DATABASE_FILE
 
@@ -10,20 +9,6 @@ from crud import (
     administrators_insert_statement, 
     bookings_insert_statement
 )
-
-
-"""
-CREATE TABLE name (
-  email _____,
-  username Varchar() NOT NULL,
-  password Varchar(10) NOT NULL,
-
-  CONSTRAINT one_user_per_email UNIQUE (
-  email, username
-  )
-);
-"""
-
 
 # CREATE STATEMENTS
 customer_create_statement = '''CREATE TABLE Customers 
@@ -35,15 +20,12 @@ customer_create_statement = '''CREATE TABLE Customers
         Username Varchar(20) NOT NULL,
         Password Varchar(20) NOT NULL,
         Telephone_No Varchar(20) NOT NULL,
-        Payment_Method Varchar(15) NOT NULL
-        CONSTRAINT one_user_per_email UNIQUE (Customer_ID, Email, FName, LName, Username, Password, Telephone_No, Payment_Method)
-        );'''
+        Payment_Method Varchar(15) NOT NULL);'''
 
 driver_create_statement = '''CREATE TABLE Driver
         (Driver_ID Varchar(10) PRIMARY KEY NOT NULL,
         Fname Varchar(20) NOT NULL,
         Lname Varchar(20) NOT NULL,
-        Email Varchar(20) NOT NULL,
         Date_of_Birth DATE NOT NULL,
         Driver_License_Num Varchar(20) NOT NULL,
         Expiry_Date DATE NOT NULL,
@@ -52,10 +34,7 @@ driver_create_statement = '''CREATE TABLE Driver
         Shift_End_Time TIME NOT NULL,
         Username Varchar(20) NOT NULL,
         Password Varchar(20) NOT NULL,
-        Number_of_passengers INTEGER NOT NULL
-        CONSTRAINT one_user_per_email UNIQUE (Email, Username, Password, License_Plate, 
-        )
-        );'''
+        Number_of_passengers INTEGER NOT NULL);'''
 
 administrator_create_statement = '''CREATE TABLE Administrator
         (Admin_ID Varchar(10) PRIMARY KEY NOT NULL,
@@ -65,7 +44,6 @@ administrator_create_statement = '''CREATE TABLE Administrator
         Telephone_No Varchar(10) NOT NULL,
         Username Varchar(20) NOT NULL,
         Password Varchar(20) NOT NULL);'''
-
 booking_create_statement = '''CREATE TABLE Booking
         (Booking_ID Varchar(10) PRIMARY KEY NOT NULL,
         Customer_ID Varchar(10) NOT NULL,
@@ -106,7 +84,7 @@ drivers_data = [
     ('N4150', 'Nicky', 'Dean',  '2000-01-12', '298 055 876', '2024-05-07', 'BRT224', '6:00pm', '1:00am', 'DeanNicky', 'YesIAmDean', 1),
     ('N3894', 'Lila', 'Compton',  '1990-06-05', '522 841 692', '2021-08-24', 'M67EMW', '6:00 pm', '1:00am', 'LilaFromCompton', 'Compton999', 1),
     ('N3989', 'Brant', 'Armstrong',  '1993-05-26', '811 726 782', '2023-06-25', '6ABJ092', '1:00am', '8:00am', 'BrantArmstrong', 'StrongArms', 4),
-    ('N4005', 'Zane', 'Truesdale',  '2000-05-24', '917 444 371', '2021-06-28', 'DZN7639', '1:00am', '8:00am', 'ZaneTruesdale23', '23Jordan23', 1),
+('N4005', 'Zane', 'Truesdale',  '2000-05-24', '917 444 371', '2021-06-28', 'DZN7639', '1:00am', '8:00am', 'ZaneTruesdale23', '23Jordan23', 1),
     ('N4098', 'Raul', 'Menendez',  '1996-09-11', '989 081 978', '2023-09-07', 'PKG063', '8:00am', '6:00pm', 'LeaderOfCordisDie', 'Nicaraguan', 4),
     ('N3954', 'James', 'Woods',  '1987-11-16', '056 896 824', '2024-06-05', 'ZMZ912', '8:00am', '6:00pm', 'WoodenJames', 'Carp3nt3r1', 4),
     ('N4078', 'Joey', 'Wheeler',  '1999-12-19', '280 473 188', '2025-05-07', 'RAL3814', '8:00am', '6:00pm', 'ImJoeyWheeler', 'WheelerK', 4)
@@ -132,143 +110,57 @@ insert_statements_and_data = (
     ('Bookings', bookings_data, bookings_insert_statement)
 )
 
-
-
-def create_all_tables():
-  # do admin tasks make table
-  pass
-
-
-def populate_tables():
-# do cst tasks make table
-  pass
-
-
-    # other code...
-
-  def Populate_tables():
-        try:
-           connection = sqlite3.connect(DATABASE_FILE)
-           "unspecified"
-        for Table_name, INSERT_DATA, INSERT_STATEMENT in insert_statements_and_data:
-                connection.executemany(INSERT_STATEMENT, INSERT_DATA)
-except:
-return False, f"Error while populating {Table_name} table."
-        finally:
-            if CONN:
-                CONN.commit()
-                CONN.close()
-        return True, "Successfully populated tables."
-
-if __name__ == "__main__":
-        result, message = create_tables(remove_existing_file=True)
-        print(message)
-        if result:
-            _, message = populate_tables()  # Assuming you want to call populate_tables after creating tables
-            print(message)
-
-
-
 def create_tables(remove_existing_file=False):
-    # if DATABASE_FILE != ':memory:' and os.path.isfile(DATABASE_FILE):
-    #     if remove_existing_file:
-    #         try:
-    #             os.remove(DATABASE_FILE)
-    #         except:
-    #             return False, 'Failed to remove existing database file.'
-    #     else:
-    #         return False, 'Database file exists.'
-  # try:
-        
-        # table_name = "unspecified"
-        # for table_name, data, insert_statement in insert_statements_and_data:
-        #   try:
-        #     cur.execute(f'DROP TABLE {table_name}')
-        #   except:
-        #     pass
-
-    try:
-      conn =  sqlite3.connect(DATABASE_FILE)
-      cur = conn.cursor()
-      cur.execute(f'CREATE TABLE {table_name} ({insert_statement})')
-    except:
-        return False, f'Failed to create table {table_name}'
-
-    for row in data:
-        try:
-            cur.execute(f'INSERT INTO {table_name} VALUES ({", ".join(row)})')
-        except:
-            return False, f'Failed to insert into {table_name} table'
-
-for table_name, create_statement in create_statements.items():
-    try:
-        cur.execute(create_statement)
-    except:
-        return False, f'Failed to create table {table_name}'
-
-    for row in data:
-        try:
-            cur.execute(f'INSERT INTO {table_name} VALUES ({", ".join(row)})')
-        except:
-            return False, f'Failed to insert into {table_name} table'
-
-for table_name, create_statement in create_statements.items():
-    try:
-        cur.execute(create_statement)
-    except:
-        return False, f'Failed to create table {table_name}'
-atements_and_data
-try:
- cur.execute(f'DROP TABLE {table_name}')
-except:
-        pass
-
-     for table_name, data, insert_statement in 
- insert_statements_and_data:
-        try:
-            cur.execute(f'CREATE TABLE {table_name} ({insert_statement})')
-        except:
-            return False, f'Failed to create table {table_name}.'
-
-        for row in data:
+    if DATABASE_FILE != ':memory:' and os.path.isfile(DATABASE_FILE):
+        if remove_existing_file:
             try:
-                cur.execute(f'INSERT INTO {table_name} VALUES ({", ".join(row)})')
- for table_name, create_statement in create_statements.items():
-        cur.execute(create_statement)
-except:
-    return False, f"Error while creating {table_name} table."
+                os.remove(DATABASE_FILE)
+            except:
+                return False, 'Failed to remove existing database file.'
+        else:
+            return False, 'Database file exists.'
+    try:
+        conn =  sqlite3.connect(DATABASE_FILE)
+        cur = conn.cursor()
+        table_name = "unspecified"
+        try:
+            for table_name, create_statement in create_statements.items():
+                cur.execute(create_statement)
+        except:
+            return False, f"Error while creating {table_name} table."
 
-except:
-return False, "Could not create database connection."
-finally:
-if conn:
-    conn.close()
-
-return True, "Successfully created tables."
+    except:
+        return False, "Could not create database connection."
+    finally:
+        if conn:
+            conn.close()
+    
+    return True, "Successfully created tables."
 
 def populate_tables():
-try:
-conn =  sqlite3.connect(DATABASE_FILE)
+    try:
+        conn =  sqlite3.connect(DATABASE_FILE)
+        
+        table_name = "unspecified"
+        try:
+            for table_name, insert_data, insert_statement in insert_statements_and_data:
+                conn.executemany(insert_statement, insert_data)
+        except:
+            return False, f"Error while populating {table_name} table."
 
-table_name = "unspecified"
-try:
-    for table_name, insert_data, insert_statement in insert_statements_and_data:
-        conn.executemany(insert_statement, insert_data)
-except:
-    return False, f"Error while populating {table_name} table."
-
-except:
-return [False, "Could not create database connection."]
-finally:
-if conn:
-    conn.commit()
-    conn.close()
-
-return True, "Successfully populated tables."
+    except:
+        return False, "Could not create database connection."
+    finally:
+        if conn:
+            conn.commit()
+            conn.close()
+    
+    return True, "Successfully populated tables."
 
 if __name__ == "__main__":
-result, message = create_tables(remove_existing_file=True)
-print(message)
-if result:
-_, message = populate_tables()
-print(message)
+    result, message = create_tables(remove_existing_file=True)
+    print(message)
+    if result:
+        _, message = populate_tables()
+        print(message)
+
