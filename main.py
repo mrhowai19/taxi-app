@@ -31,20 +31,19 @@ class DB:  # creating a class DB with functions to perform various operations on
 db = DB()
 
 
-def _select_bookings_customer(user_class, crud_method, screen_move_method):
+def select_bookings_customer(user_class, crud_method, screen_move_method):
     # Execute function is to perform the SQL operations. Here, it produces all the rows from the table.
     # self.cur.execute("SELECT * FROM Booking WHERE Customer_ID= " % userID)
     # fetching all the rows one by one from the table and storing it in list rows
     #  = self.cur.fetchall()
-    return
-          RESULT: object
+    return result: object
     result, message = crud_method(userID)
 
     if isinstance(result, user_class):
      return result
 
 
-def _login_common(user_class, crud_method, screen_move_method):
+def login_common(user_class, crud_method, screen_move_method):
     user_name = username_field.get()
     if not user_name:
         messagebox.showerror('Invalid Information', 'Please enter a username!')
@@ -76,15 +75,15 @@ def _login_common(user_class, crud_method, screen_move_method):
 
 
 def login_as_customer():
-    _login_common(Customer, crud.login_as_customer, move_login_to_customer)
+    login_common(Customer, crud.login_as_customer, move_login_to_customer)
 
 
 def login_as_driver():
-    _login_common(Driver, crud.login_as_driver, move_login_to_driver)
+    login_common(Driver, crud.login_as_driver, move_login_to_driver)
 
 
 def login_as_administrator():
-    _login_common(Administrator, crud.login_as_administrator,
+    login_common(Administrator, crud.login_as_administrator,
                   move_login_to_administrator)
 
 
