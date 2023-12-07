@@ -3,6 +3,7 @@ from tkinter import messagebox
 import sqlite3
 import crud
 from model import Customer, Driver, Administrator, Booking
+from create_tables import create_tables
 
 WINDOW_SIZE = '1350x700'
 GRID_SIZE: int = 9
@@ -618,4 +619,5 @@ admin_logout_button = tk.Button(administrator_screen,
 admin_logout_button.grid(column=3, row=5, columnspan=3, sticky="nsew")
 
 # LAUNCH
+create_tables()
 login_screen.mainloop()
