@@ -30,12 +30,20 @@ def insert_customer(Customer_ID, FName, LName, Address, Email, Username, Passwor
     ({Customer_ID}, {FName}, {LName}, {Address}, {Email}, {Username},{Password}, {Telephone_No}, {Payment_Method})"
 
 
-drivers_insert_statement = 'INSERT INTO Driver (Driver_ID,Fname,LName,Date_of_Birth,Driver_License_Num,Expiry_Date,License_Plate,Shift_Start_Time,Shift_End_Time,Username,Password,Number_Of_Passengers) VALUES (?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+def insert_driver(Driver_ID,Fname,LName,Date_of_Birth,Driver_License_Num,Expiry_Date,License_Plate,Shift_Start_Time,Shift_End_Time,Username,Password,Number_Of_Passengers) VALUES (?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    return f"INSERT INTO Drivers \
+    (Driver_ID,FName,LName,Date_of_Birth,Driver_License_Num,Expiry_Date,License_Plate,Shift_Start_Time,SHift_End_Time,Username,Password,Number_of_Passengers) VALUES (?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    ({Driver_ID}, {FName}, {LName}, {Date_of_Birth}, {Driver_License_Num}, {Expiry_Date}, {Shift_Start_Time}, {Shift_End_Time}, {Username} {Password}, {Number_of_Passengers})"
 
-administrators_insert_statement = 'INSERT INTO Administrator (Admin_ID,FName,LName,Email,Telephone_No,Username,Password) VALUES (?, ?, ?, ?, ?, ?, ?)'
+def insert_administrators(Admin_ID,FName,LName,Email,Telephone_No,Username,Password) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    return f"INSERT INTO Administrators
+    (Admin_ID,FName,LName,Email,Telephone_No,Username,Password) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    ({Admin_ID}, {FName}, {LName}, {Email}, {Telephone_No}, {Username}, {Password})"
 
-bookings_insert_statement = 'INSERT INTO Booking (Booking_ID,Customer_ID,Driver_ID,pickup_address,pickup_time,pickup_date,drop_off_address,Admin_ID,booking_date,cost_of_trip,paid,date_cancelled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-
+def insert_bookings(Booking_ID,Customer_ID,Driver_ID,pickup_address,pickup_time,pickup_date,drop_off_address,Admin_ID,booking_date,cost_of_trip,paid,date_cancelled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    return f"INTER INTO Bookings
+    (Booking_ID,Customer_ID,Driver_ID,pickup_address,pickup_time,pickup_date,drop_off_address,Admin_ID,booking_date,cost_of_trip,paid,date_cancelled) VAlLUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'    
+    ({Booking_ID}, {Customer_ID}, {Driver_ID}, {pickup_address}, {pickup_time}, {pickup_date}, {drop_off_address}, {Admin_ID}, {booking_date}, {cost_of_trip}, {paid}, {date_cancelled})"
 
 # A generic insert method that can be called for any table.
 # table_name_human: the human readable name of the table
